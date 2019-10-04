@@ -1,31 +1,55 @@
 package com.dev.mine.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import javax.validation.metadata.CascadableDescriptor;
 import java.util.List;
 
 @Entity
+@Table(name = "partenaire")
 public class Partenaire {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(length = 20)
     private String entreprise;
-    @Column(length = 10)
     private String ninea;
-    @Column(length = 20)
-    private String adresse;
-    @Column (length = 20)
     private String email;
-    @Column(length = 15)
+    private String adresse;
     private String telephone;
-    @Column(length = 20)
     private String statut;
-    @OneToMany(mappedBy = "user")
 
-    private List <User> users;
-    private List <User> getUsers() { return users;}
-    public void setUsers(List<User> employes) {
+    @OneToMany(mappedBy = "partenaire")
+    private List<User> users;
+
+    @OneToMany(mappedBy = "partenaire")
+    private List<Compte> comptes;
+
+    public Partenaire() {
+    }
+
+    public Partenaire(String entreprise, String ninea, String email, String adresse, String telephone) {
+        this.entreprise = entreprise;
+        this.ninea = ninea;
+        this.email = email;
+        this.adresse = adresse;
+        this.telephone = telephone;
+    }
+
+    public List<Compte> getComptes() {
+        return comptes;
+    }
+
+    public void setComptes(List<Compte> comptes) {
+        this.comptes = comptes;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
@@ -53,20 +77,20 @@ public class Partenaire {
         this.ninea = ninea;
     }
 
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
     public String getTelephone() {

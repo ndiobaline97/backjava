@@ -14,7 +14,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
-
+    private User userConnect;
 
     @Override
     @Transactional
@@ -22,7 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
-
+        userConnect = user;
         return UserPrinciple.build(user);
+    }
+    public User getUserConnect(){
+        return userConnect;
     }
 }
